@@ -1,0 +1,54 @@
+{
+    "messages": [
+        {
+            "id": 256,
+            "name": "VehicleStatus",
+            "dlc": 8,
+            "signals": [
+                {
+                    "name": "VehicleSpeed",
+                    "start_bit": 0,
+                    "bit_length": 8,
+                    "is_little_endian": true,
+                    "is_signed": false,
+                    "factor": 1.0,
+                    "offset": 0.0,
+                    "min_val": 0.0,
+                    "max_val": 220.0,
+                    "unit": "km/h"
+                },
+                {
+                    "name": "EngineRPM",
+                    "start_bit": 8,
+                    "bit_length": 16,
+                    "is_little_endian": true,
+                    "is_signed": false,
+                    "factor": 0.25,
+                    "offset": 0.0,
+                    "min_val": 0.0,
+                    "max_val": 8000.0,
+                    "unit": "rpm"
+                }
+            ]
+        },
+        {
+            "id": 512,
+            "name": "DoorControl",
+            "dlc": 8,
+            "signals": [
+                {
+                    "name": "DoorLockStatus",
+                    "start_bit": 0,
+                    "bit_length": 2,
+                    "is_little_endian": true,
+                    "is_signed": false,
+                    "factor": 1.0,
+                    "offset": 0.0,
+                    "min_val": 0.0,
+                    "max_val": 3.0,
+                    "unit": ""
+                }
+            ]
+        }
+    ]
+}

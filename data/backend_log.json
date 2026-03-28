@@ -1,0 +1,6 @@
+[
+    {"timestamp": 0.200, "level": "INFO", "service": "vehicle-gateway", "endpoint": "/api/v1/vehicle/status", "request_id": "req-001", "message": "Vehicle status poll: online", "response_code": 200},
+    {"timestamp": 1.500, "level": "INFO", "service": "vehicle-gateway", "endpoint": "/api/v1/vehicle/door", "request_id": "req-002", "message": "Door status update received: all doors locked", "response_code": 200},
+    {"timestamp": 3.000, "level": "WARN", "service": "telemetry-service", "endpoint": "/api/v1/telemetry/ingest", "request_id": "req-003", "message": "Speed data stale: no update for 2s", "response_code": 200},
+    {"timestamp": 6.200, "level": "ERROR", "service": "telemetry-service", "endpoint": "/api/v1/telemetry/ingest", "request_id": "req-004", "message": "Speed value out of range: 255 km/h exceeds max 220 km/h", "response_code": 422}
+]

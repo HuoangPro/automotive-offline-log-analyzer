@@ -1,0 +1,14 @@
+[
+    {"timestamp": 0.050, "ecu_id": "ECU1", "app_id": "BODY", "ctx_id": "DOOR", "session_id": 1, "msg_type": "log", "log_level": "info", "counter": 0, "payload": "Door lock system initialized"},
+    {"timestamp": 0.100, "ecu_id": "ECU1", "app_id": "SPEED", "ctx_id": "LOG", "session_id": 1, "msg_type": "log", "log_level": "info", "counter": 9, "payload": "Vehicle speed is 10 km/h"},
+    {"timestamp": 0.300, "ecu_id": "ECU1", "app_id": "SPEED", "ctx_id": "LOG", "session_id": 1, "msg_type": "log", "log_level": "info", "counter": 10, "payload": "Vehicle speed is 120 km/h"},
+    {"timestamp": 0.300, "ecu_id": "ECU1", "app_id": "SPEED", "ctx_id": "LOG", "session_id": 1, "msg_type": "log", "log_level": "info", "counter": 10, "payload": "Vehicle speed is 60 km/h"},
+    {"timestamp": 0.500, "ecu_id": "ECU1", "app_id": "BODY", "ctx_id": "DOOR", "session_id": 1, "msg_type": "log", "log_level": "info", "counter": 1, "payload": "Door status: locked"},
+    {"timestamp": 1.100, "ecu_id": "ECU1", "app_id": "BODY", "ctx_id": "DOOR", "session_id": 1, "msg_type": "log", "log_level": "error", "counter": 2, "payload": "unexpected unlock request in driving mode"},
+    {"timestamp": 1.200, "ecu_id": "ECU1", "app_id": "BODY", "ctx_id": "DOOR", "session_id": 1, "msg_type": "log", "log_level": "warn", "counter": 3, "payload": "Door unlock command rejected by safety module"},
+    {"timestamp": 2.500, "ecu_id": "ECU2", "app_id": "DIAG", "ctx_id": "TRCE", "session_id": 1, "msg_type": "log", "log_level": "info", "counter": 4, "payload": "Periodic health check: OK"},
+    {"timestamp": 4.000, "ecu_id": "ECU1", "app_id": "BODY", "ctx_id": "SENS", "session_id": 1, "msg_type": "log", "log_level": "warn", "counter": 5, "payload": "Speed sensor reading unchanged for extended period"},
+    {"timestamp": 6.000, "ecu_id": "ECU2", "app_id": "DIAG", "ctx_id": "TRCE", "session_id": 1, "msg_type": "log", "log_level": "error", "counter": 6, "payload": "Speed sensor spike detected: value=255, expected range 0-220"},
+    {"timestamp": 7.000, "ecu_id": "ECU1", "app_id": "SYS", "ctx_id": "PWR", "session_id": 1, "msg_type": "log", "log_level": "info", "counter": 7, "payload": "Temperature: 85C, Voltage: 12.5V"},
+    {"timestamp": 8.000, "ecu_id": "ECU1", "app_id": "SYS", "ctx_id": "PWR", "session_id": 1, "msg_type": "log", "log_level": "warn", "counter": 8, "payload": "Temperature: 210C, Voltage: 13.0V"}
+]

@@ -1,0 +1,157 @@
+{
+    "time_offsets": {
+        "CAN": 0.0,
+        "DLT": 0.0,
+        "MQTT": 0.0,
+        "BACKEND": 0.0
+    },
+
+    "event_mappings": [
+        {
+            "source_type": "DLT",
+            "filter": {
+                "app_id": "SPEED"
+            },
+            "payload_regex": "Vehicle speed is (\\d+) km/h",
+            "regex_groups": ["speed"],
+            "new_event_type": "dlt_speed_event"
+        },
+        {
+            "source_type": "DLT",
+            "filter": {
+                "app_id": "BODY",
+                "ctx_id": "DOOR"
+            },
+            "payload_regex": "Door status: (\\w+)",
+            "regex_groups": ["door_status"],
+            "new_event_type": "dlt_door_event"
+        },
+        {
+            "source_type": "DLT",
+            "filter": {
+                "app_id": "SYS",
+                "ctx_id": "PWR"
+            },
+            "payload_regex": "Temperature: (\\d+)C, Voltage: ([\\d.]+)V",
+            "regex_groups": ["temp", "volt"],
+            "new_event_type": "dlt_power_event"
+        },
+        {
+            "source_type": "DLT",
+            "filter": {
+                "app_id": "DIAG",
+                "ctx_id": "TRCE"
+            },
+            "payload_regex": "Speed sensor spike detected: value=(\\d+), expected range (\\d+)-(\\d+)",
+            "regex_groups": ["spike_value", "min_range", "max_range"],
+            "new_event_type": "dlt_sensor_spike_event"
+        }
+    ],
+
+    "signal_rules": [
+        {
+            "signal_name": "VehicleSpeed",
+            "source_event_type": "vehiclespeed",
+            "value_property": "value",
+            "min_value": 0.0,
+            "max_value": 220.0,
+            "spike_threshold": 50.0,
+            "freeze_duration_s": 2.0,
+            "freeze_sample_count": 0
+        },
+        {
+            "signal_name": "PowerTemperature",
+            "source_event_type": "power_status",
+            "value_property": "temperature",
+            "min_value": -40.0,
+            "max_value": 150.0,
+            "spike_threshold": 0.0,
+            "freeze_duration_s": 0.0,
+            "freeze_sample_count": 0
+        }
+    ],
+
+    "sequence_rules": [
+        {
+            "name": "DoorLockSafety",
+            "initial_state": "DRIVING_LOCKED",
+            "transitions": [
+                {
+                    "from_state": "DRIVING_LOCKED",
+                    "to_state": "DRIVING_LOCKED",
+                    "trigger_event_type": "vehiclespeed",
+                    "trigger_condition_key": "",
+                    "trigger_condition_val": ""
+                },
+                {
+                    "from_state": "DRIVING_LOCKED",
+                    "to_state": "DRIVING_LOCKED",
+                    "trigger_event_type": "doorlockstatus",
+                    "trigger_condition_key": "value",
+                    "trigger_condition_val": "0.000000"
+                },
+                {
+                    "from_state": "PARKED_LOCKED",
+                    "to_state": "PARKED_UNLOCKED",
+                    "trigger_event_type": "doorlockstatus",
+                    "trigger_condition_key": "value",
+                    "trigger_condition_val": "1.000000"
+                },
+                {
+                    "from_state": "DRIVING_LOCKED",
+                    "to_state": "PARKED_LOCKED",
+                    "trigger_event_type": "vehiclespeed",
+                    "trigger_condition_key": "value",
+                    "trigger_condition_val": "0.000000"
+                }
+            ]
+        }
+    ],
+
+    "timing_rules": [
+        {
+            "event_type": "can_message",
+            "source_type": "CAN",
+            "expected_period_s": 0.1,
+            "tolerance_factor": 2.0,
+            "max_jitter_s": 0.05,
+            "filter_property_key": "can_id",
+            "filter_property_value": "256"
+        }
+    ],
+
+    "consistency_rules": [
+        {
+            "data_name": "door_lock_status",
+            "source_a_type": "CAN",
+            "source_a_event_type": "doorlockstatus",
+            "source_a_value_key": "value",
+            "source_a_value_map": {
+                "0.000000": "locked",
+                "1.000000": "unlocked",
+                "2.000000": "error",
+                "3.000000": "unknown"
+            },
+            "source_b_type": "MQTT",
+            "source_b_event_type": "door_status_mqtt",
+            "source_b_value_key": "mqtt_locked",
+            "source_b_value_map": {
+                "true": "locked",
+                "false": "unlocked"
+            },
+            "time_window_s": 0.0001
+        },
+        {
+            "data_name": "vehicle_speed_consistency",
+            "source_a_type": "CAN",
+            "source_a_event_type": "vehiclespeed",
+            "source_a_value_key": "value",
+            "source_b_type": "DLT",
+            "source_b_event_type": "dlt_speed_event",
+            "source_b_value_key": "speed",
+            "time_window_s": 0.0001,
+            "is_numeric": true,
+            "numeric_tolerance": 1.0
+        }
+    ]
+}
